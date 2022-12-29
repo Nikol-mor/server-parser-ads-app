@@ -12,6 +12,6 @@ async function getAdsData(req, res) {
     const adsData = await adsService.parseAdsTxt(adsTxt);
     res.send(adsData);
   } catch (err) {
-    res.status(500).send({ err: 'Failed getting ads data' + 'domain'`${domain}` });
+    res.status(500).send({ err: 'Failed getting ads data', domain });
   }
 }
