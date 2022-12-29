@@ -4,6 +4,8 @@ module.exports = { getAdsData };
 
 async function getAdsData(req, res) {
   const domain = req.query.searchDomain;
+  console.log('domain', JSON.stringify(domain));
+  console.log('req.query', JSON.stringify(req.query));
 
   try {
     const adsTxt = await adsService.scrapeAdsTxt(domain);
