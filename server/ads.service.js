@@ -6,7 +6,6 @@ module.exports = {
 };
 
 async function scrapeAdsTxt(domain) {
-  console.log('domain', domain);
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -14,8 +13,8 @@ async function scrapeAdsTxt(domain) {
     const txt = await page.evaluate(() => document.querySelector('pre').innerText);
     await browser.close();
     return txt;
-  } catch (err) {
-    console.log('err');
+  } catch (error) {
+    console.log(error);
   }
 }
 

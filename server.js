@@ -1,19 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const expressSession = require('express-session');
 
 const app = express();
 const http = require('http').createServer(app);
 
-const session = expressSession({
-  secret: 'coding is amazing',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false },
-});
 app.use(express.json());
-app.use(session);
 app.use(express.static('public'));
 
 if (process.env.NODE_ENV === 'production') {
@@ -33,21 +25,14 @@ if (process.env.NODE_ENV === 'production') {
 
 const adsRoutes = require('./server/ads.routes');
 
-// routes
-// const setupAsyncLocalStorage = require('./middlewares/setupAls.middleware');
-// app.all('*', setupAsyncLocalStorage);
+app.use('/api/adsData', adsRoutes);
 
-app.use('/server/adsData', adsRoutes);
+const port = process.env.PORT || 3030;
 
-// Make every server-side-route to match the index.html
-// so when requesting http://localhost:3030/index.html/car/123 it will still respond with
-// our SPA (single page app) (the index.html file) and allow vue/react-router to take it from there
-app.get('/**', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+http.listen(port, () => {
+  console.log('Server is running on port: ' + port);
 });
 
-// const logger = require('./services/logger.service');
-const port = process.env.PORT || 3030;
-http.listen(port, () => {
-  //   logger.info('Server is running on port: ' + port);
+app.get('/**', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

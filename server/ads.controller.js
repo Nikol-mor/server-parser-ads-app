@@ -3,8 +3,7 @@ const adsService = require('./ads.service');
 module.exports = { getAdsData };
 
 async function getAdsData(req, res) {
-  const domain = req.query.data;
-  console.log('domain in controller', domain);
+  const domain = req.query.searchDomain;
 
   try {
     const adsTxt = await adsService.scrapeAdsTxt(domain);
